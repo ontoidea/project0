@@ -5,11 +5,14 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
  
 <!DOCTYPE html>
-<html>
+<html lang="ko">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Guestbook List</title>
 
+<link href="<c:url value="/resources/css/bootstrap.min.css"/>" rel="stylesheet" media="screen">
+<script src="<c:url value="/resources/js/bootstrap.min.js"/>"></script>
 <script src="<c:url value="/resources/js/jquery-1.11.1.js"/>"></script>
 <script type="text/javascript">
 <!--
@@ -36,10 +39,6 @@ function fnCmdDelete(articleId) {
 // -->
 </script>
 
-<style>
-table {width:100%; border-top:dotted;}
-</style>
-
 </head>
 <body>
 
@@ -47,29 +46,39 @@ table {width:100%; border-top:dotted;}
     <input type="hidden" id="articleId" name="articleId" />
     <input type="hidden" id="commandUrl" name="commandUrl" />
 
-<c:forEach var="result" items="${list}" varStatus="status">
-	<table>
-    <tr>
-        <td>${result.name}|${result.mail}</td>
-        <td align="right">${result.cdate}</td>
-    </tr>
-    <tr>
-        <td colspan="2">${result.content}</td>
-    </tr>
-    <tr>
-        <td colspan="2" align="right">
-        	<input type="submit" id="edit" value="수정" onclick="fnCmdEdit('${result.id}')" />
-        	<input type="submit" id="delete" value="삭제" onclick="fnCmdDelete('${result.id}')" />
-        </td>
-    </tr>
-	</table>
-</c:forEach>
+<br/>
+<div class="row-fluid">
+  <div class="span8 offset2">
 
-<table>
-	<tr><td align="right"><br/>
-		<input type="submit" id="submit" value="새 글" />
-	</td></tr>
+<table class="table table-striped">
+	<c:forEach var="result" items="${list}" varStatus="status">
+	    <tr>
+	        <td><strong>${result.name}</strong> ${result.mail}</td>
+	        <td width="148px">
+	        	<p class="text-right">${result.cdate}&nbsp;&nbsp;</p>
+	        </td>
+	    </tr>
+	    <tr>
+	        <td>${result.content}</td>
+	        <td>
+	       		<p class="text-right">
+	        		<button class="btn btn-link" onclick="fnCmdEdit('${result.id}')"><i class="icon-edit"></i> 수정</button>
+	        		<button class="btn btn-link" onclick="fnCmdDelete('${result.id}')"><i class="icon-remove"></i> 삭제</button>
+	        	</p>
+	        </td>
+	    </tr>
+	</c:forEach>
+	    <tr>
+	        <td colspan="2">
+	        	<p class="text-right">
+	        		<button id="submit" type="submit" class="btn btn-primary"><i class="icon-pencil"></i> 새글쓰기</button>
+	        	</p>
+	        </td>
+	    </tr>
 </table>
+
+  </div>
+</div>
 
 </form:form>
 

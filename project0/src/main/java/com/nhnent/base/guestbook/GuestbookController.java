@@ -48,6 +48,8 @@ public class GuestbookController {
         if (articleId > 0) {
         	guestbookVO = this.guestbookService.get(articleId);
         	
+        	guestbookVO.setContent(guestbookVO.getContent().replace("<br/>", "\n"));
+        	
         	if(guestbookVO.getPwd().equals(pwdInput)) {
         		model.addAttribute("commandUrl", "editsave");
         	} else {
@@ -75,6 +77,7 @@ public class GuestbookController {
     		return "guestbook/error";
     	}
     	
+    	guestbookVO.setContent(guestbookVO.getContent().replace("\n", "<br/>"));
         this.guestbookService.add(guestbookVO);
  
         return "redirect:list";
@@ -91,6 +94,7 @@ public class GuestbookController {
     		return "guestbook/error";
     	}
     	
+    	guestbookVO.setContent(guestbookVO.getContent().replace("\n", "<br/>"));
         this.guestbookService.update(guestbookVO);
         return "redirect:list";
     }

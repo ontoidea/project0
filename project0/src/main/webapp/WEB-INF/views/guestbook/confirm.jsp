@@ -5,16 +5,25 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
  
 <!DOCTYPE html>
-<html>
+<html lang="ko">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Guestbook Password Confirm</title>
 
+<link href="<c:url value="/resources/css/bootstrap.min.css"/>" rel="stylesheet" media="screen">
+<script src="<c:url value="/resources/js/bootstrap.min.js"/>"></script>
 <script src="<c:url value="/resources/js/jquery-1.11.1.js"/>"></script>
 <script type="text/javascript">
 <!--
 $(document).ready(function(){
 	$('#submit').click(function(){
+		var pwd = $('#pwdInput');
+		if(!pwd.val()) {
+	        alert('비밀번호를 입력해주세요.');
+	        pwd.focus();
+	        return false;
+	    }
 	    $('form').attr({action:'${commandUrl}'}).submit();
 	});
 });
@@ -31,21 +40,21 @@ table {text-align:center;width:100%; border-top:dotted;}
 <form:form id="guestbookVO" name="guestbookVO" method="post">
     <input type="hidden" name="articleId" value="${articleId}" />
 
-	<table>
-		<tr><td>패스워드를 입력하세요.</td></tr>
-		<tr>
-			<td>
-				<input type="password" name="pwdInput" />
-				<input type="submit" id="submit" value="확인" />
-			</td>
-		</tr>
-	</table>
-	
-	<table>
-		<tr><td align="right"><br/>
-			<input type="button" id="button" value="목록" onClick="location.href='list'"; />
-		</td></tr>
-	</table>
+<div class="row-fluid">
+  <div class="span8 offset2">
+
+<div class="form-actions">
+<p class="text-center">
+	<input type="password" id="pwdInput" name="pwdInput" placeholder="비밀번호" />
+	<br/>
+	<button id="submit" type="submit" class="btn btn-primary"><i class="icon-ok"></i> 비밀번호 확인</button>
+	<button type="button" class="btn" onclick="history.back(-1)"><i class="icon-remove"></i> 취소</button>
+</p>
+</div>
+
+  </div>
+</div>
+
 </form:form>
 
 </body>
