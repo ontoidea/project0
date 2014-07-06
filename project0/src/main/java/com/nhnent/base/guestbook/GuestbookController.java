@@ -15,8 +15,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-@RequestMapping("/guestbook")
 @Controller
+@RequestMapping("/guestbook")
 public class GuestbookController {
 	@Autowired
     private GuestbookService guestbookService;

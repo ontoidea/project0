@@ -1,5 +1,6 @@
 package com.nhnent.base.guestbook;
 
+
 public class GuestbookVO {
     private Integer id;
     private String content;

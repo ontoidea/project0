@@ -30,7 +30,8 @@ $(document).ready(function(){
 </head>
 <body>
  
-<form:form name="guestbookVO" action="${commandUrl}" method="post">
+<form:form name="guestbookVO" action="${commandUrl}" method="post" 
+ng-init="name='${result.name}';mail='${result.mail}';pwd='';content='${result.content}'">
     <input type="hidden" name="id" value="${result.id}" />
 
 <br/>
