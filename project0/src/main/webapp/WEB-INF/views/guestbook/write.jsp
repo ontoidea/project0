@@ -1,56 +1,27 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<% request.setCharacterEncoding("UTF-8"); %>
 <%@ taglib prefix="c"      uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form"   uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
  
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="ko" ng-app>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Guestbook Write</title>
 
 <link href="<c:url value="/resources/css/bootstrap.min.css"/>" rel="stylesheet" media="screen">
+<%-- <link href="<c:url value="/resources/css/bootstrap-responsive.min.css"/>" rel="stylesheet" media="screen"> --%>
 <script src="<c:url value="/resources/js/bootstrap.min.js"/>"></script>
+<script src="<c:url value="/resources/js/angular.js"/>"></script>
 <script src="<c:url value="/resources/js/jquery-1.11.1.js"/>"></script>
 
 <script>
 <!--
 $(document).ready(function(){
-	var name = $('#name');
-	var mail = $('#mail');
-	var pwd = $('#pwd');
-	var content = $('#content');
-	
 	$('#submit').click(function(){
-	    // 정규식 - 이메일 유효성 검사
-	    var regEmail = /([\w-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$/;
-	
-	    if(!name.val()) {
-	        alert('이름을 입력해주세요.');
-	        name.focus();
-	        return false;
-	    } else if(!mail.val()){
-	        alert('이메일주소를 입력해주세요.');
-	        mail.focus();
-	        return false;
-	    } else if(!regEmail.test(mail.val())) {//클라이언트측 이메일 검증
-	            alert('이메일주소가 유효하지 않습니다');
-	            mail.focus();
-	            return false;
-	    } else if(!pwd.val()){
-	        alert('비밀번호를 입력해주세요.');
-	        pwd.focus();
-	        return false;
-	    } else if(!content.val()){
-	        alert('내용을 입력해주세요.');
-	        content.focus();
-	        return false;
-	    }
-	    
 	 	if(confirm('정말로 글을 등록하시겠습니까?')) {
-	 		$('form').attr({action:'${commandUrl}'}).submit();
+	 		$('form').submit();
 	 	}
    });
 });
@@ -59,7 +30,7 @@ $(document).ready(function(){
 </head>
 <body>
  
-<form:form id="guestbookVO" name="guestbookVO" method="post">
+<form:form name="guestbookVO" action="${commandUrl}" method="post">
     <input type="hidden" name="id" value="${result.id}" />
 
 <br/>
@@ -72,7 +43,9 @@ $(document).ready(function(){
         	<p class="text-center"><label class="control-label" for="name">이 름</label></p>
         </th>
         <td>
-        	<input type="text" id="name" name="name" value="${result.name}" placeholder="이름을 입력하세요." autofocus />
+        	<input type="text" id="name" name="name" value="${result.name}" placeholder="이름을 입력하세요." autofocus 
+        	ng-model="name" ng-maxlength="15" ng-required="true"/>
+        	<span class="text-error" ng-show="guestbookVO.name.$error.required">이름을 입력해주세요.</span>
         </td>
     </tr>
     <tr>
@@ -80,7 +53,10 @@ $(document).ready(function(){
         	<p class="text-center"><label class="control-label" for="mail">이메일</label></p>
         </th>
         <td>
-        	<input type="email" id="mail" name="mail" value="${result.mail}" placeholder="메일주소를 입력하세요." />
+        	<input type="email" id="mail" name="mail" value="${result.mail}" placeholder="메일주소를 입력하세요." 
+        	ng-model="mail" ng-maxlength="25" ng-required="true"/>
+        	<span class="text-error" ng-show="guestbookVO.mail.$error.required">이메일주소를 입력해주세요.</span>
+        	<span class="text-error" ng-show="guestbookVO.mail.$error.email">이메일 형식이 다릅니다.</span>
         </td>
     </tr>
     <tr>
@@ -88,7 +64,9 @@ $(document).ready(function(){
         	<p class="text-center"><label class="control-label" for="pwd">비밀번호</label></p>
         </th>
         <td>
-        	<input type="password" id="pwd" name="pwd" placeholder="비밀번호를 입력하세요." />
+        	<input type="password" id="pwd" name="pwd" placeholder="비밀번호를 입력하세요." 
+        	ng-model="pwd" ng-maxlength="15" ng-required="true"/>
+        	<span class="text-error" ng-show="guestbookVO.pwd.$error.required">비밀번호를 입력해주세요.</span>
         </td>
     </tr>
     <tr>
@@ -96,7 +74,10 @@ $(document).ready(function(){
         	<p class="text-center"><label class="control-label" for="content">내 용</label></p>
         </th>
         <td>
-        	<textarea rows="4"  id="content" name="content" placeholder="내용을 입력하세요." class="span10">${result.content}</textarea>
+        	<textarea rows="4"  id="content" name="content" placeholder="내용을 입력하세요." class="span10"
+        	ng-model="content" ng-maxlength="5000" ng-required="true">${result.content}</textarea>
+        	<br/>
+        	<span class="text-error" ng-show="guestbookVO.content.$error.required">내용을 입력해주세요.</span>
         </td>
     </tr>
     </table>
@@ -107,6 +88,7 @@ $(document).ready(function(){
 		<td>
 			<p class="text-right">
 			<button id="submit" type="submit" class="btn btn-primary"><i class="icon-pencil"></i> 등록하기</button>
+			<!-- <a href="#myModal" role="button" class="btn" data-toggle="modal"><i class="icon-pencil"></i> 등록하기</a> -->
 			</p>
 		</td>
 	</tr>
@@ -116,6 +98,26 @@ $(document).ready(function(){
 </div>
 
 </form:form>
+
+
+
+
+<!-- <div class="modal hide" id="myModal" tabindex="-1" role="dialog"
+	aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal"
+			aria-hidden="true">×</button>
+		<h3 id="myModalLabel">Modal header</h3>
+	</div>
+	<div class="modal-body">
+		<p>One fine body…</p>
+	</div>
+	<div class="modal-footer">
+		<button class="btn" data-dismiss="modal" aria-hidden="true">
+			Close</button>
+		<button class="btn btn-primary">Save changes</button>
+	</div>
+</div> -->
 
 </body>
 </html>

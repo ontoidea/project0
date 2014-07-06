@@ -1,5 +1,4 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<% request.setCharacterEncoding("UTF-8"); %>
 <%@ taglib prefix="c"      uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form"   uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
@@ -7,7 +6,7 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Guestbook List</title>
 
@@ -46,39 +45,39 @@ function fnCmdDelete(articleId) {
     <input type="hidden" id="articleId" name="articleId" />
     <input type="hidden" id="commandUrl" name="commandUrl" />
 
-<br/>
-<div class="row-fluid">
-  <div class="span8 offset2">
-
-<table class="table table-striped">
-	<c:forEach var="result" items="${list}" varStatus="status">
-	    <tr>
-	        <td><strong>${result.name}</strong> ${result.mail}</td>
-	        <td width="148px">
-	        	<p class="text-right">${result.cdate}&nbsp;&nbsp;</p>
-	        </td>
-	    </tr>
-	    <tr>
-	        <td>${result.content}</td>
-	        <td>
-	       		<p class="text-right">
-	        		<button class="btn btn-link" onclick="fnCmdEdit('${result.id}')"><i class="icon-edit"></i> 수정</button>
-	        		<button class="btn btn-link" onclick="fnCmdDelete('${result.id}')"><i class="icon-remove"></i> 삭제</button>
-	        	</p>
-	        </td>
-	    </tr>
-	</c:forEach>
-	    <tr>
-	        <td colspan="2">
-	        	<p class="text-right">
-	        		<button id="submit" type="submit" class="btn btn-primary"><i class="icon-pencil"></i> 새글쓰기</button>
-	        	</p>
-	        </td>
-	    </tr>
-</table>
-
-  </div>
-</div>
+	<br/>
+	<div class="row-fluid">
+	  <div class="span8 offset2">
+	
+		<table class="table table-striped">
+			<c:forEach var="result" items="${list}" varStatus="status">
+			    <tr>
+			        <td><strong>${result.name}</strong> ${result.mail}</td>
+			        <td width="148px">
+			        	<p class="text-right">${result.cdate}&nbsp;&nbsp;</p>
+			        </td>
+			    </tr>
+			    <tr>
+			        <td>${result.content}</td>
+			        <td>
+			       		<p class="text-right">
+			        		<button class="btn btn-link" onclick="fnCmdEdit('${result.id}')"><i class="icon-edit"></i> 수정</button>
+			        		<button class="btn btn-link" onclick="fnCmdDelete('${result.id}')"><i class="icon-remove"></i> 삭제</button>
+			        	</p>
+			        </td>
+			    </tr>
+			</c:forEach>
+			    <tr>
+			        <td colspan="2">
+			        	<p class="text-right">
+			        		<button id="submit" type="submit" class="btn btn-primary"><i class="icon-pencil"></i> 새글쓰기</button>
+			        	</p>
+			        </td>
+			    </tr>
+		</table>
+	
+	  </div>
+	</div>
 
 </form:form>
 
