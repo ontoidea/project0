@@ -1,10 +1,11 @@
 package com.nhnent.base.guestbook;
 
 import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -13,7 +14,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 @RequestMapping("/guestbook")
@@ -67,15 +67,15 @@ public class GuestbookController {
     }
     
     @RequestMapping(value = "/addsave", method = RequestMethod.POST)
-    public String add(@ModelAttribute("guestbookVO") GuestbookVO guestbookVO,
+    public String add(@ModelAttribute("guestbookVO") @Valid GuestbookVO guestbookVO,
     		ModelMap model) {
     	
     	//서버측 이메일 검증
-    	if(!checkEmail(guestbookVO.getMail())) {
+/*    	if(!checkEmail(guestbookVO.getMail())) {
     		model.addAttribute("message",
     				"<script>alert('이메일주소가 유효하지 않습니다.');history.back(-1)</script>");
     		return "guestbook/error";
-    	}
+    	}*/
     	
     	guestbookVO.setContent(guestbookVO.getContent().replace("\n", "<br/>"));
         this.guestbookService.add(guestbookVO);
@@ -84,15 +84,15 @@ public class GuestbookController {
     }
 
     @RequestMapping(value = "/editsave", method = RequestMethod.POST)
-    public String update(@ModelAttribute("guestbookVO") GuestbookVO guestbookVO,
+    public String update(@ModelAttribute("guestbookVO") @Valid GuestbookVO guestbookVO,
     		ModelMap model) {
     	
     	//서버측 이메일 검증
-    	if(!checkEmail(guestbookVO.getMail())) {
+/*    	if(!checkEmail(guestbookVO.getMail())) {
     		model.addAttribute("message",
     				"<script>alert('이메일주소가 유효하지 않습니다.');history.back(-1)</script>");
     		return "guestbook/error";
-    	}
+    	}*/
     	
     	guestbookVO.setContent(guestbookVO.getContent().replace("\n", "<br/>"));
         this.guestbookService.update(guestbookVO);
@@ -200,7 +200,7 @@ public class GuestbookController {
     	}
     }*/
     
-    public static boolean checkEmail(String email) {
+/*    public static boolean checkEmail(String email) {
         if(email.length() == 0) {
             return false;
         }
@@ -214,5 +214,5 @@ public class GuestbookController {
         }
      
         return false;
-    }
+    }*/
 }

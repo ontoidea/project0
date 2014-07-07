@@ -47,6 +47,13 @@
 			<version>${org.springframework-version}</version>
 		</dependency>
 
+		<!-- Validator -->
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-validator</artifactId>
+			<version>5.1.1.Final</version>
+		</dependency>
+
 		<!-- Database -->
 		<dependency>
 			<groupId>commons-dbcp</groupId>

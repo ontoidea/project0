@@ -1,11 +1,24 @@
 package com.nhnent.base.guestbook;
 
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
+
 
 public class GuestbookVO {
     private Integer id;
+	@NotNull
+	@Size(min=1, max=10000, message="내용을 입력하세요.")
     private String content;
+	@NotNull
+	@Size(min=1, max=30, message="이름은 1~30자 이내로 작성하세요.")
     private String name;
+	@NotNull
+	@Size(min=1, max=30, message="비밀번호는 1~30자 이내로 작성하세요.")
     private String pwd;
+	@NotNull
+	@Size(min=1, max=50, message="이메일은 1~50자 이내로 작성하세요.")
+    @Pattern(regexp="^[_0-9a-zA-Z-]+@[0-9a-zA-Z]+(.[_0-9a-zA-Z-]+)*$", message="이메일주소가 유효하지 않습니다.")
     private String mail;
     private String cdate;
     private String edate;
